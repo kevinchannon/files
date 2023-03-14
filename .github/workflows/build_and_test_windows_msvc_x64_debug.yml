@@ -1,0 +1,36 @@
+name: "Windows | MSVC++ | x64 | Debug "
+
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - files/**
+      - test/**
+      - .github/workflows/build_and_test_windows_msvc_x64_debug.yml
+  pull_request:
+    branches: [ "master" ]
+    paths:
+      - files/**
+      - test/**
+      - .github/workflows/build_and_test_windows_msvc_x64_debug.yml
+
+env:
+  BUILD_TYPE: Debug
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure
+        run: cmake -B ${{github.workspace}}/build/msvc/x64/debug -DCMAKE_BUILD_TYPE=Debug
+
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build/msvc/x64/debug --config Debug
+
+      - name: Test
+        working-directory: ${{github.workspace}}\build\msvc\x64\debug\test
+        shell: cmd
+        run: ${{github.workspace}}\build\msvc\x64\debug\test\Debug\files_test.exe

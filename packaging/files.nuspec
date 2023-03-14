@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package >
+    <metadata>
+        <id>files</id>
+        <version>$version$</version>
+        <authors>Kevin J Channon</authors>
+        <description>Files: use common file types in C++</description>
+        <repository url="https://github.com/kevinchannon/files.git" type="git"/>
+        <projectUrl>https://github.com/kevinchannon/files</projectUrl>
+        <license type="expression">MIT</license>
+        <readme>README.md</readme>
+        <tags>Native, native, files, formats, parsing</tags>
+        <releaseNotes>
+        0.0.0 - The beginning
+        </releaseNotes>
+        <dependencies>
+          <dependency id="wite" version="1.0.0" />
+        </dependencies>
+    </metadata>
+     
+    <files>
+        <file src="..\files\**\*.*"   target="build\native\include\files" />
+        <file src="files.props"   target="build\native" />
+        <file src="files.targets"   target="build\native" />
+        <file src="README.md" target="" />
+    </files>
+</package>
