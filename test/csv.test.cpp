@@ -2,7 +2,13 @@
 
 #include <catch2/catch_all.hpp>
 
+#include <sstream>
+
 TEST_CASE("CSV tests")
 {
-  REQUIRE(true);
+  SECTION("Construction") {
+    SECTION("Default constructs with...") {
+      SECTION("zero rows")  REQUIRE(0 == files::csv{}.rows());
+    }
+  }
 }
