@@ -29,5 +29,17 @@ TEST_CASE("CSV tests")
         }
       }
     }
+
+    SECTION("Inserting csv::endl adds a new row") {
+      auto csv = files::csv{};
+      csv << 1 << files::csv::endl;
+      REQUIRE(1 == csv.rows());
+
+      csv << 2;
+
+      REQUIRE(2 == csv.rows());
+      REQUIRE(1 == csv.cols());
+    }
   }
+
 }
