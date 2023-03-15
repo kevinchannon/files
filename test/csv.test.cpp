@@ -40,6 +40,26 @@ TEST_CASE("CSV tests")
       REQUIRE(2 == csv.rows());
       REQUIRE(1 == csv.cols());
     }
-  }
 
+    SECTION("Values can have different types") {
+      auto csv = files::csv{};
+
+      SECTION("integer values") {
+        SECTION("int8_t")   csv << std::int8_t{-5};
+        SECTION("int16_t")  csv << std::int16_t{-5};
+        SECTION("int32_t")  csv << std::int32_t{-5};
+        SECTION("int64_t")  csv << std::int64_t{-5};
+        SECTION("uint8_t")  csv << std::uint8_t{5};
+        SECTION("uint16_t") csv << std::uint16_t{5};
+        SECTION("uint32_t") csv << std::uint32_t{5};
+        SECTION("uint64_t") csv << std::uint64_t{5};
+      }
+
+      SECTION("floating-point values") {
+        SECTION("float") csv << 3.142f;
+        SECTION("double") csv << 2.718;
+        SECTION("long double") csv << long double{1.618};
+      }
+    }
+  }
 }

@@ -2,13 +2,32 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <vector>
 #include <variant>
+#include <vector>
 
 namespace files {
 
+template <typename T>
+concept cell_value =
+    requires(T) {
+      std::is_same_v<std::int8_t, T> || std::is_same_v<std::int8_t, T> || std::is_same_v<std::int16_t, T> ||
+          std::is_same_v<std::int32_t, T> || std::is_same_v<std::int64_t, T> || std::is_same_v<std::uint8_t, T> ||
+          std::is_same_v<std::uint16_t, T> || std::is_same_v<std::uint32_t, T> || std::is_same_v<std::uint64_t, T> ||
+          std::is_same_v<float, T> || std::is_same_v<double, T> || std::is_same_v<long double, T>;
+    };
+
 class csv {
-  using cell = std::int64_t;
+  using cell     = std::variant<std::int8_t,
+                            std::int16_t,
+                            std::int32_t,
+                            std::int64_t,
+                            std::uint8_t,
+                            std::uint16_t,
+                            std::uint32_t,
+                            std::uint64_t,
+                            float,
+                            double,
+                            long double>;
   using cell_row = std::vector<cell>;
 
  public:
@@ -18,7 +37,8 @@ class csv {
   [[nodiscard]] size_t rows() const { return _rows.size() - (_rows.back().empty() ? 1 : 0); }
   [[nodiscard]] size_t cols() const { return _cols; }
 
-  csv& operator<<(uint64_t val) {
+  template<cell_value Value_T>
+  csv& operator<<(Value_T val) {
     _rows.back().emplace_back(val);
     _cols = std::max(_cols, _rows.back().size());
 
