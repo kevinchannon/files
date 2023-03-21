@@ -77,4 +77,20 @@ TEST_CASE("CSV tests")
       }
     }
   }
+
+  SECTION("Reading values") {
+    auto csv = files::csv{};
+
+    csv 
+      << 1    << 2      << files::csv::endl
+      << 3.14 << "foo"  << files::csv::endl;
+
+    REQUIRE(2 == csv.rows());
+    REQUIRE(2 == csv.cols());
+
+    REQUIRE(files::csv::cell{1} == csv.at(0, 0));
+    REQUIRE(files::csv::cell{2} == csv.at(0, 1));
+    REQUIRE(files::csv::cell{3.14} == csv.at(1, 0));
+    REQUIRE(files::csv::cell{"foo"} == csv.at(1, 1));
+  }
 }

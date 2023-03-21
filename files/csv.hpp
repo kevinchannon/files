@@ -3,9 +3,9 @@
 #include <cstddef>
 #include <cstdint>
 #include <string>
+#include <string_view>
 #include <variant>
 #include <vector>
-#include <string_view>
 
 namespace files {
 
@@ -21,7 +21,8 @@ concept cell_value =
     };
 
 class csv {
-  using cell     = std::variant<bool,
+ public:
+  using cell = std::variant<bool,
                             std::int8_t,
                             std::int16_t,
                             std::int32_t,
@@ -35,6 +36,8 @@ class csv {
                             long double,
                             std::string,
                             std::wstring>;
+
+ private:
   using cell_row = std::vector<cell>;
 
  public:
@@ -75,6 +78,8 @@ class csv {
 
     return *this;
   }
+
+  const cell& at(size_t r, size_t c) const { return _rows.at(r).at(c); }
 
  private:
   std::vector<cell_row> _rows{{cell_row{}}};
