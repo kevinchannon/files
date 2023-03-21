@@ -71,6 +71,9 @@ TEST_CASE("CSV tests")
         SECTION("std::string") csv << std::string{"foo"};
         SECTION("const char*") csv << "foo";
         SECTION("std::string_view") csv << std::string_view{"foo"};
+        SECTION("std::wstring") csv << std::wstring{L"foo"};
+        SECTION("const wchar_t*") csv << L"foo";
+        SECTION("std::wstring_view") csv << std::wstring_view{L"foo"};
       }
     }
   }

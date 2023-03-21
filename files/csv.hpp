@@ -16,7 +16,8 @@ concept cell_value =
           std::is_same_v<std::int16_t, T> || std::is_same_v<std::int32_t, T> || std::is_same_v<std::int64_t, T> ||
           std::is_same_v<std::uint8_t, T> || std::is_same_v<std::uint16_t, T> || std::is_same_v<std::uint32_t, T> ||
           std::is_same_v<std::uint64_t, T> || std::is_same_v<float, T> || std::is_same_v<double, T> ||
-          std::is_same_v<long double, T> || std::is_same_v<std::string, T> || std::is_same_v<std::string_view, T>;
+          std::is_same_v<long double, T> || std::is_same_v<std::string, T> || std::is_same_v<std::string_view, T> ||
+          std::is_same_v<std::wstring, T> || std::is_same_v<std::wstring_view, T>;
     };
 
 class csv {
@@ -32,7 +33,8 @@ class csv {
                             float,
                             double,
                             long double,
-                            std::string>;
+                            std::string,
+                            std::wstring>;
   using cell_row = std::vector<cell>;
 
  public:
@@ -54,6 +56,15 @@ class csv {
     requires std::is_same_v<std::string_view, Value_T>
   csv& operator<<(Value_T val) {
     _rows.back().emplace_back(std::string{val});
+    _cols = std::max(_cols, _rows.back().size());
+
+    return *this;
+  }
+
+  template <cell_value Value_T>
+    requires std::is_same_v<std::wstring_view, Value_T>
+  csv& operator<<(Value_T val) {
+    _rows.back().emplace_back(std::wstring{val});
     _cols = std::max(_cols, _rows.back().size());
 
     return *this;
