@@ -3,6 +3,7 @@
 #include <catch2/catch_all.hpp>
 
 #include <sstream>
+#include <string>
 
 TEST_CASE("CSV tests")
 {
@@ -59,6 +60,15 @@ TEST_CASE("CSV tests")
         SECTION("float") csv << 3.142f;
         SECTION("double") csv << 2.718;
         SECTION("long double") csv << long double{1.618};
+      }
+
+      SECTION("boolean values") {
+        SECTION("true") csv << true;
+        SECTION("false") csv << false;
+      }
+
+      SECTION("string values") {
+        SECTION("std::string") csv << std::string{"foo"}; 
       }
     }
   }
