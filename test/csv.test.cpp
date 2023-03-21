@@ -68,7 +68,9 @@ TEST_CASE("CSV tests")
       }
 
       SECTION("string values") {
-        SECTION("std::string") csv << std::string{"foo"}; 
+        SECTION("std::string") csv << std::string{"foo"};
+        SECTION("const char*") csv << "foo";
+        SECTION("std::string_view") csv << std::string_view{"foo"};
       }
     }
   }
