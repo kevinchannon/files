@@ -59,7 +59,7 @@ TEST_CASE("CSV tests")
       SECTION("floating-point values") {
         SECTION("float") csv << 3.142f;
         SECTION("double") csv << 2.718;
-        SECTION("long double") csv << long double{1.618};
+        SECTION("long double") csv << static_cast<long double>(1.618);
       }
 
       SECTION("boolean values") {
